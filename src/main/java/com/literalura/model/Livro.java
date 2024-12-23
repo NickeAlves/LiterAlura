@@ -1,12 +1,13 @@
 package com.literalura.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "livros")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Livro {
     @Id
     private Long id;
@@ -66,5 +67,15 @@ public class Livro {
 
     public void setDownloadCount(Integer downloadCount) {
         this.downloadCount = downloadCount;
+    }
+
+    @Override
+    public String toString() {
+        return "--------\tLivro\t----------\n" +
+                "Título: " + title +
+                "\nAutor: " + getAuthors() +
+                "\nIdioma: " + getLanguages() +
+                "\nNúmero de downloads: " + downloadCount +
+                "\n----------------------------\n";
     }
 }
