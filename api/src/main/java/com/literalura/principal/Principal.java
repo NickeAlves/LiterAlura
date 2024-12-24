@@ -1,7 +1,6 @@
 package com.literalura.principal;
 
 import com.literalura.model.ApiResult;
-import com.literalura.model.DadosLivro;
 import com.literalura.service.ConsumoApi;
 import com.literalura.service.ConverteDados;
 
@@ -57,7 +56,6 @@ public class Principal {
                     System.out.println("Opção inválida! Selecione uma opção válida.");
             }
         }
-
     }
 
     private void buscarLivroPeloTitulo() {
