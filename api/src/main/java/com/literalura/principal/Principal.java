@@ -18,6 +18,10 @@ public class Principal {
     @Autowired
     private LivroService livroService;
 
+    public Principal(LivroService livroService) {
+        this.livroService = livroService;
+    }
+
     private final String URL_BASE = "https://gutendex.com/books/?search=";
 
     public void exibeMenu() {

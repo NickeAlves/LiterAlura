@@ -14,6 +14,10 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
+    public LivroService(LivroRepository livroRepository) {
+        this.repository = livroRepository;
+    }
+
     private List<LivroDTO> converteDados(List<Livro> livros) {
         return livros.stream()
                 .map(l -> new LivroDTO(l.getId(),
