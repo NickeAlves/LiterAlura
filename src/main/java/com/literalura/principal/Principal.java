@@ -66,10 +66,8 @@ public class Principal {
         try {
             var json = consumoApi.obterDados(URL_BASE + tituloLivro.replace(" ", "%20"));
             ApiResult result = converteDados.obterDados(json, ApiResult.class);
-//            DadosLivro dados = result.getResults();
             System.out.println(json);
             System.out.println(result.getResults().get(0).authors().get(0).getLivroList());
-//            System.out.println("Dados:\n" + dados);
         } catch (Exception e) {
             System.out.println("Erro ao buscar o livro: " + e.getMessage());
         }
