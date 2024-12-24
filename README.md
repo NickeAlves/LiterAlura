@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📚 LiterAlura - Livraria Virtual 📚
+# 📚 LiterAlura - Biblioteca Virtual 📚
 ## Projeto desafio do curso: Java☕com Spring Boot🍃
 
 ![Logo LiterAlura](images/LiterAlura.png)
