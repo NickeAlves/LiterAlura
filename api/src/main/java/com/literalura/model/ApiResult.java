@@ -15,4 +15,15 @@ public class ApiResult {
     public List<DadosLivro> getResults() {
         return results;
     }
+
+    public Livro getFirstBook() {
+        var firstBook = results.getFirst();
+        return new Livro(
+                firstBook.id(),
+                firstBook.title(),
+                firstBook.languages(),
+                firstBook.authors(),
+                firstBook.downloadCount(),
+                firstBook.getImageUrl());
+    }
 }

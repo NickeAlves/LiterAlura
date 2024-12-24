@@ -3,7 +3,7 @@
 # 📚 LiterAlura - Biblioteca Virtual 📚
 ## Projeto desafio do curso: Java☕com Spring Boot🍃
 
-![Logo LiterAlura](images/LiterAlura.png)
+![Logo LiterAlura](/api/images/LiterAlura.png)
 
 </div>
 

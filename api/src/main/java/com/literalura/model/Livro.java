@@ -17,16 +17,18 @@ public class Livro {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Autor> authors;
     private Integer downloadCount;
+    private String cover;
 
     public Livro() {
     }
 
-    public Livro(Long id, String title, List<String> languages, List<Autor> authors, Integer downloadCount) {
+    public Livro(Long id, String title, List<String> languages, List<Autor> authors, Integer downloadCount, String cover) {
         this.id = id;
         this.title = title;
         this.languages = languages;
         this.authors = authors;
         this.downloadCount = downloadCount;
+        this.cover = cover;
     }
 
     public Long getId() {
@@ -67,6 +69,10 @@ public class Livro {
 
     public void setDownloadCount(Integer downloadCount) {
         this.downloadCount = downloadCount;
+    }
+
+    public String getCover() {
+        return cover;
     }
 
     @Override

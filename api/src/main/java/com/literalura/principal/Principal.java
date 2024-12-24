@@ -3,14 +3,20 @@ package com.literalura.principal;
 import com.literalura.model.ApiResult;
 import com.literalura.service.ConsumoApi;
 import com.literalura.service.ConverteDados;
+import com.literalura.service.LivroService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class Principal {
 
     Scanner sc = new Scanner(System.in);
     ConsumoApi consumoApi = new ConsumoApi();
     ConverteDados converteDados = new ConverteDados();
+    @Autowired
+    private LivroService livroService;
 
     private final String URL_BASE = "https://gutendex.com/books/?search=";
 
@@ -64,14 +70,14 @@ public class Principal {
         try {
             var json = consumoApi.obterDados(URL_BASE + tituloLivro.replace(" ", "%20"));
             ApiResult result = converteDados.obterDados(json, ApiResult.class);
-            System.out.println(json);
-            System.out.println(result.getResults().get(0).authors().get(0).getLivroList());
+            livroService.salvarLivro(result.getFirstBook());
         } catch (Exception e) {
             System.out.println("Erro ao buscar o livro: " + e.getMessage());
         }
     }
 
     private void listarLivrosRegistrados() {
+        livroService.listarLivros();
     }
 
     private void listarAutoresRegistrados() {
