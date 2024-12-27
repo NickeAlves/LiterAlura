@@ -1,34 +1,30 @@
 package com.literalura.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "livros")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Livro {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @ElementCollection
-    private List<String> languages;
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Autor> authors;
-    private Integer downloadCount;
-    private String cover;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Autor autor;
+    private List<String> languages = new ArrayList<>();
+    private int downloadCount;
 
     public Livro() {
     }
 
-    public Livro(Long id, String title, List<String> languages, List<Autor> authors, Integer downloadCount, String cover) {
-        this.id = id;
-        this.title = title;
-        this.languages = languages;
-        this.authors = authors;
-        this.downloadCount = downloadCount;
-        this.cover = cover;
+    public Livro(DadosLivro dadosLivro) {
+        this.title = dadosLivro.title();
+        this.languages = dadosLivro.languages();
+        this.downloadCount = dadosLivro.downloadCount();
+        this.autor = new Autor(dadosLivro.autor().get(0));
     }
 
     public Long getId() {
@@ -47,6 +43,14 @@ public class Livro {
         this.title = title;
     }
 
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
     public List<String> getLanguages() {
         return languages;
     }
@@ -55,33 +59,22 @@ public class Livro {
         this.languages = languages;
     }
 
-    public List<Autor> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<Autor> authors) {
-        this.authors = authors;
-    }
-
-    public Integer getDownloadCount() {
+    public int getDownloadCount() {
         return downloadCount;
     }
 
-    public void setDownloadCount(Integer downloadCount) {
+    public void setDownloadCount(int downloadCount) {
         this.downloadCount = downloadCount;
-    }
-
-    public String getCover() {
-        return cover;
     }
 
     @Override
     public String toString() {
-        return "--------\tLivro\t----------\n" +
-                "Título: " + title +
-                "\nAutor: " + getAuthors() +
-                "\nIdioma: " + getLanguages() +
-                "\nNúmero de downloads: " + downloadCount +
-                "\n----------------------------\n";
+        return "\n***   Livro   ***" +
+                "\nTitulo: " + title +
+                "\nAutor: " + autor.getName() +
+                "\nIdioma: " + languages +
+                "\nDownloads: " + downloadCount +
+                "\n*****************\n";
+
     }
 }

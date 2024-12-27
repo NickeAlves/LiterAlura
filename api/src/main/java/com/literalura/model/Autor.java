@@ -1,36 +1,29 @@
 package com.literalura.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "autores")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private String name;
-    @JsonAlias("birth_year")
-    private Integer birthYear;
-    @JsonAlias("death_year")
-    private Integer deathYear;
-
-    @ManyToMany(mappedBy = "authors")
-    List<Livro> livroList;
+    private String birth_year;
+    private String death_year;
+    @OneToMany(mappedBy = "autor", fetch = FetchType.EAGER)
+    private List<Livro> livros = new ArrayList<>();
 
     public Autor() {
     }
 
-    public Autor(Long id, String name, Integer birthYear, Integer deathYear) {
-        this.id = id;
-        this.name = name;
-        this.birthYear = birthYear;
-        this.deathYear = deathYear;
+    public Autor(DadosAutor dadosAutor) {
+        this.name = dadosAutor.name();
+        this.birth_year = dadosAutor.birth_year();
+        this.death_year = dadosAutor.death_year();
     }
 
     public Long getId() {
@@ -49,31 +42,44 @@ public class Autor {
         this.name = name;
     }
 
-    public Integer getBirthYear() {
-        return birthYear;
+    public String getBirth_year() {
+        return birth_year;
     }
 
-    public void setBirthYear(Integer birthYear) {
-        this.birthYear = birthYear;
+    public void setBirth_year(String birth_year) {
+        this.birth_year = birth_year;
     }
 
-    public Integer getDeathYear() {
-        return deathYear;
+    public String getDeath_year() {
+        return death_year;
     }
 
-    public void setDeathYear(Integer deathYear) {
-        this.deathYear = deathYear;
+    public void setDeath_year(String death_year) {
+        this.death_year = death_year;
     }
 
-    public List<Livro> getLivroList() {
-        return livroList;
+    public List<Livro> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(List<Livro> livros) {
+        this.livros = new ArrayList<>();
+        livros.forEach(l -> {
+            l.setAutor(this);
+            this.livros.add(l);
+        });
     }
 
     @Override
     public String toString() {
-        return "Autor: " + name +
-                "\nAno nascimento: " + birthYear +
-                "\nAno falescimento: " + deathYear +
-                "Livros: " + livroList;
+        List<String> livros = this.getLivros()
+                .stream()
+                .map(Livro::getTitle).toList();
+        return "\n***   Autor   ***" +
+                "\nNome: " + name +
+                "\nBirth year: " + birth_year +
+                "\nDeath year: " + death_year +
+                "\nLivros: " + livros +
+                "\n****************************\n";
     }
 }
